@@ -25,7 +25,12 @@ class MyApp extends StatelessWidget {
             title: Text('AppBar'),
             backgroundColor: Colors.blue,
           ),
-          body: Text('Body 입니다'),
+          body: Container(
+            color: Colors.yellow,
+            child: Center(
+              child: Text('Body 입니다'),
+            ),
+          ),
           bottomNavigationBar: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
