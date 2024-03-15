@@ -25,13 +25,13 @@ class MyApp extends StatelessWidget {
     bool isOnboarded = prefs.getBool("isOnboarded") ?? false;
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        // backgroundColor: Color.fromARGB(255, 36, 34, 34),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: "KCCGanpan",
       ),
-      home: TestScreen(),
+      title: 'Who Am I',
+      // isOnboarded 값에 따라 Homepage로 열지 TestScreen으로 열지 결정됨.
+      home: isOnboarded ? HomePage() : TestScreen(),
     );
   }
 }
@@ -40,6 +40,11 @@ class TestScreen extends StatelessWidget {
   final List<Introduction> list = [
     Introduction(
       title: '현재의 나',
+      titleTextStyle: TextStyle(
+          color: Colors.purple,
+          fontSize: 35,
+          fontFamily: "KCCGanpan",
+          fontWeight: FontWeight.w200),
       subTitle: '12년동안 브랜딩디자이너였다가 서른넘어서 처음 개발 배워 개발자를 꿈꾸고 있다.',
       imageUrl: 'assets/images/onboarding3.png',
     ),
