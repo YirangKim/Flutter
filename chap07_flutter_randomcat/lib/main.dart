@@ -39,7 +39,7 @@ class CatService extends ChangeNotifier {
   // 고양이 이미지 10개 가져오는 메서드
   void getRandomCatImages() async {
     String path =
-        "https://api.thecatapi.com/v1/images/search?limit=10&mime_types=gif";
+        "https://api.thecatapi.com/v1/images/search?limit=10&mime_types=jpg";
     var result = await Dio().get(path);
     print(result.data);
     for (int i = 0; i < result.data.length; i++) {
@@ -134,6 +134,8 @@ class HomePage extends StatelessWidget {
                 onTap: () {
                   //사진 클릭시 작동
                   print(index);
+                  // toggleFavoriteImage 메서드는 사용자가 이미지를 좋아요/취소하도록 하는 기능
+                  // 이미지의 인덱스를 찾아 좋아요한 사진 목록 업데이트 : 좋아요/취소
                   catService.toggleFavoriteImage(catImages);
                 },
               );
