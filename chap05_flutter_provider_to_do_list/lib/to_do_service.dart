@@ -12,7 +12,7 @@ class ToDoService extends ChangeNotifier {
   void createToDo(String job) {
     toDoList.add(ToDo(job, false));
     // 갱신 : Consumer로 등록된 곳의 builder 만 새로 갱신해서 화면을 그려줌.
-    notifyListeners();
+    notifyListeners(); //상태 관리
   }
 
   //todo수정

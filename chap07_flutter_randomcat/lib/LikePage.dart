@@ -1,56 +1,18 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'LikePage.dart';
-import 'package:chap07_flutter_randomcat/cat_service.dart';
+import 'cat_service.dart';
+import 'main.dart';
 
-void main() async {
-  // 1 main() 함수 에서 async 를 쓰려면 필요
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Shared_preferences 인스턴스 생성
-  // 1 getInstance읽어와서 prefs 저장 -> 리스트
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  runApp(
-    MultiProvider(
-      //MultiProvider 상태값이 바뀌는걸 관리
-      providers: [
-        ChangeNotifierProvider(
-            create: (context) =>
-                CatService(prefs) // 2 생성자 호출할 때 파라미터로 SharedPreferences 전달
-            ),
-      ],
-      child: MyApp(),
-    ),
-  );
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+//LikePage 생성 페이지
+class LikePage extends StatefulWidget {
+  const LikePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // 3 null을 반환하는 경우 false를 기본값으로 지정
-    //bool favoriteImg = prefs.getBool("favoriteImg") ?? false;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
-  }
+  State<LikePage> createState() => _LikePageState();
 }
 
-// /// ToDo클래스
-// class ToDo {
-//   String imgUrl; //이미지 url
-//   ToDo(this.imgUrl); // 생성자
-// }
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+class _LikePageState extends State<LikePage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<CatService>(
@@ -58,7 +20,7 @@ class HomePage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              "랜덤 고양이",
+              "좋아요 이미지",
               style: TextStyle(color: Colors.white),
             ),
             backgroundColor: Colors.indigo,
@@ -90,8 +52,9 @@ class HomePage extends StatelessWidget {
             // 그리드 전체에 대한 패딩 설정
             padding: EdgeInsets.all(8),
             // 그리드에 표시될 위젯 리스트, 10개 위젯 생성
-            children: List.generate(catService.catImages.length, (index) {
-              String catImages = catService.catImages[index];
+            children:
+                List.generate(catService.favoriteCatImages.length, (index) {
+              String catImages = catService.favoriteCatImages[index];
               return GestureDetector(
                 //GestureDetector 이미지 선택할수 있게
                 child: Stack(

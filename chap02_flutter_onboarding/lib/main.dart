@@ -4,11 +4,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // SharedPreferences 인스턴스를 어디서든 접근 가능 하도록 전역 변수로 선언
 // late : 나중에 꼭 값을 할당해준다는 의미.
-// 1
+// 1 전역변수
 late SharedPreferences prefs;
 
 void main() async {
   // main() 함수 에서 async 를 쓰려면 필요
+  // 2-1세트
   WidgetsFlutterBinding.ensureInitialized();
 
   // Shared_preferences 인스턴스 생성
@@ -70,7 +71,9 @@ class TestScreen extends StatelessWidget {
       introductionList: list,
       onTapSkipButton: () {
         // 마지막 페이지가 나오거나 skip을 해서 Homepage로 가기전에 isOnboarded를 true로 바꿔준다
-        // 6 파일에 강제 저장
+        // 5 버튼을 클릭했을 때, 파일에 강제 저장
+        // boolean true, false
+        // set 저장
         prefs.setBool('isOnboarded', true);
         Navigator.push(
           context,
