@@ -41,17 +41,17 @@ class _LikePageState extends State<LikePage> {
             ],
           ),
           // GridView count 생성자로, 그리드 내 아이템 수를
-          // 기반으로 레이아웃을 구성할 수 있다.
+          // 기반으로 레이아웃을 구성할 수 있다..
           body: GridView.count(
-            //크로스 축으로 아이템이 2개씩 배치되도록 설정
+            //크로스 축으로 아이템이 2개씩 배치되도록 설정.
             crossAxisCount: 2,
-            // 그리드의 주측(세로) 사이의 아이템 공간 설정
+            // 그리드의 주측(세로) 사이의 아이템 공간 설정.
             mainAxisSpacing: 8,
-            // 그리드의 크로스측(가로) 사이의 아이템 공간 설정
+            // 그리드의 크로스측(가로) 사이의 아이템 공간 설정.
             crossAxisSpacing: 8,
-            // 그리드 전체에 대한 패딩 설정
+            // 그리드 전체에 대한 패딩 설정.
             padding: EdgeInsets.all(8),
-            // 그리드에 표시될 위젯 리스트, 10개 위젯 생성
+            // 그리드에 표시될 위젯 리스트, 10개 위젯 생성.
             children:
                 List.generate(catService.favoriteCatImages.length, (index) {
               String catImages = catService.favoriteCatImages[index];
