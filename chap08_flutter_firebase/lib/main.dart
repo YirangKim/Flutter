@@ -1,4 +1,5 @@
 import 'package:chap08_flutter_firebase/auth_service.dart';
+import 'package:chap08_flutter_firebase/to_do_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ void main()  async{
       //MultiProvider
       MultiProvider(providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => TodoService()),
       ],
         child: const MyApp(),
       )
@@ -159,87 +161,98 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController jobController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('TodoList'),
-        actions: [
-          TextButton(
-              onPressed: () {
-                //로그아웃 버튼 눌렀을 때 로그인 페이지 이동
-                context.read<AuthService>().signOut();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-              child: Text(
-                '로그아웃',
-                style: TextStyle(color: Colors.black),
-              ))
-        ],
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: jobController,
-                    decoration: InputDecoration(hintText: "job을 입력해주세요"),
-                  ),
-                ),
-                ElevatedButton(
+    return Consumer<TodoService>(
+      builder: (context, TodoService, child) {
+        //로그인한 회원정보를 가져오기 위해 AuthService를 위젯트리 최상단에서 가져옴
+        final AuthService authService = context.read<AuthService>();
+        //로그인 시에만 HomePage에 접근 가능하기 때문에 User는 null이 될수 없다.
+        //따라서, !로 nullable을 지워준다.
+        User user = authService.currentUser()!;
+        print(user.uid); //유저아이디 확인
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('TodoList'),
+            actions: [
+              TextButton(
                   onPressed: () {
-                    // add 버튼을 눌렀을 때 job을 추가
+                    //로그아웃 버튼 눌렀을 때 로그인 페이지 이동
+                    context.read<AuthService>().signOut();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
                   },
-                  child: Icon(Icons.add),
-                ),
-              ],
-            ),
+                  child: Text(
+                    '로그아웃',
+                    style: TextStyle(color: Colors.black),
+                  ))
+            ],
           ),
-          // line
-          Divider(
-            height: 1,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 20,
-              itemBuilder: (context, index) {
-                String job = "$index";
-                bool isDone = false;
-                // ListView를 쓸 때 함께 씀 ListTile
-                // trailing 위치
-                return ListTile(
-                  title: Text(
-                    job,
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: isDone ? Colors.grey : Colors.black,
-                        decoration: isDone
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none),
-                  ),
-                  trailing: IconButton(
-                    onPressed: () {
-                      //삭제버턴을 눌렀을 때 동작
-                    },
-                    icon: Icon(
-                      CupertinoIcons.delete,
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: jobController,
+                        decoration: InputDecoration(hintText: "job을 입력해주세요"),
+                      ),
                     ),
-                  ),
-                  onTap: () {
-                    //아이템을 클릭했을 때 isDone 상태 변경
+                    ElevatedButton(
+                      onPressed: () {
+                        // add 버튼을 눌렀을 때 job을 추가
+                      },
+                      child: Icon(Icons.add),
+                    ),
+                  ],
+                ),
+              ),
+              // line
+              Divider(
+                height: 1,
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 20,
+                  itemBuilder: (context, index) {
+                    String job = "$index";
+                    bool isDone = false;
+                    // ListView를 쓸 때 함께 씀 ListTile
+                    // trailing 위치
+                    return ListTile(
+                      title: Text(
+                        job,
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: isDone ? Colors.grey : Colors.black,
+                            decoration: isDone
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none),
+                      ),
+                      trailing: IconButton(
+                        onPressed: () {
+                          //삭제버턴을 눌렀을 때 동작
+                        },
+                        icon: Icon(
+                          CupertinoIcons.delete,
+                        ),
+                      ),
+                      onTap: () {
+                        //아이템을 클릭했을 때 isDone 상태 변경
+                      },
+                    );
                   },
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
