@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "754987870380",
-    "project_id": "todolistwithfirebase-ac651",
-    "storage_bucket": "todolistwithfirebase-ac651.appspot.com"
+    "project_number": "636423205499",
+    "project_id": "testfirebase-ba1f2",
+    "storage_bucket": "testfirebase-ba1f2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:754987870380:android:e05954db67525ca8255709",
+        "mobilesdk_app_id": "1:636423205499:android:a22e2c63298c6f7f0ea8de",
         "android_client_info": {
           "package_name": "com.example.chap08_flutter_firebase"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAbdjkyPW8tmaeLOAAA0ptGHRTS717d-ig"
+          "current_key": "AIzaSyDHB69DobmN6pvAhc4QJNeomgzyfwpdRP8"
         }
       ],
       "services": {
